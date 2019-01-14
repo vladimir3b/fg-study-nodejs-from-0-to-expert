@@ -3,9 +3,9 @@
  */
 
  // Dependencies
- import * as http from 'http';
- import * as url from 'url';
- import { StringDecoder } from 'string_decoder';
+import * as http from 'http';
+import * as url from 'url';
+import { StringDecoder } from 'string_decoder';
 import { ParsedUrlQuery } from 'querystring';
 
 interface IDataForHandler {
