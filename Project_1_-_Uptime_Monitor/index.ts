@@ -16,6 +16,11 @@ interface IDataForHandler {
   payload: string;
 }
 
+interface ISampleHandler {
+  sample?: (data: IDataForHandler, callback: Function) => void;
+  notFound?: (data: IDataForHandler, callback: Function) => void;
+}
+
 class MyServer {
   // Create a singleton
   private static _instance: MyServer;
@@ -27,6 +32,7 @@ class MyServer {
   // Singleton's properties
   public server: http.Server;
   public data: IDataForHandler;
+  public handlers: ISampleHandler;
 
   // Singleton's constructor
   private constructor() {
