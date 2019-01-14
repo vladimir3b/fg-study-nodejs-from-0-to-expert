@@ -17,8 +17,8 @@ interface IDataForHandler {
 }
 
 interface ISampleHandler {
-  sample?: (data: IDataForHandler, callback: Function) => void;
-  notFound?: (data: IDataForHandler, callback: Function) => void;
+  sample: (data: IDataForHandler, callback: Function) => void;
+  notFound: (data: IDataForHandler, callback: Function) => void;
 }
 
 class MyServer {
@@ -31,11 +31,12 @@ class MyServer {
 
   // Singleton's properties
   public server: http.Server;
-  public data: IDataForHandler;
+  public data: IDataForHandler | null;
   public handlers: ISampleHandler;
 
   // Singleton's constructor
   private constructor() {
+    this.data = null;
     this.server = http.createServer((request: http.IncomingMessage, response: http.ServerResponse) => {
 
       // Get the URL and parse it
@@ -57,7 +58,25 @@ class MyServer {
       // Get the payload, if any
 
 
+
     })
+
+    this.handlers = {
+      sample: (data: IDataForHandler, callback: Function) => {
+        // Callback http status code and a payload object
+        callback(406, {
+          name: 'sample handler'
+        })
+      },
+      notFound: (data: IDataForHandler, callback:Function) => {
+        // Not found handler
+        callback(404);
+      }
+    }
+
+    // this.router = {
+    //   sample: this.handlers.sample
+    // }
   }
 
 }
