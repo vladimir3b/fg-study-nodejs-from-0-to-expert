@@ -4,8 +4,7 @@
   "description": "Study NodeJS with real world applications in JavaScript and Typescript",
   "main": "index.js",
   "scripts": {
-    "project1-js": "node ./Project_1_-_Uptime_Monitor/index.js",
-    "project1-ts": "ts-node --project ./tsconfig.json ./Project_1_-_Uptime_Monitor/index.ts"
+    "project_1": "nodemon ./src/Project_1_-_Uptime_Monitor/index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,6 +22,7 @@
   "homepage": "https://github.com/vladimirioan82/fg-study-nodejs-from-0-to-expert#readme",
   "dependencies": {
     "@types/node": "^10.12.18",
+    "nodemon": "^1.18.9",
     "ts-node": "^7.0.1",
     "typescript": "^3.2.2"
   },
