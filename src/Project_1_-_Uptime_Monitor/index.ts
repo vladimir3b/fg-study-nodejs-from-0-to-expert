@@ -1,7 +1,8 @@
+import { IServerResponseModel } from './models/server-response.model';
 import * as http from 'http';
 import * as url from 'url';
-import { ParsedUrlQuery } from 'querystring';
 import { StringDecoder, NodeStringDecoder } from 'string_decoder';
+import { ROUTER } from './router';
 
 const PORT = 3000;
 
@@ -13,28 +14,33 @@ class WebServer {
   }
 
   server: http.Server;
-  path?: string;
-  method?: string;
-  payload?: string;
-  queryStringObject?: ParsedUrlQuery;
-  headers?: http.IncomingHttpHeaders;
+  serverResponse: IServerResponseModel;
+  get chosenHandler(): any {
+    // return (this.serverResponse.path in ROUTER) ? (ROUTER as any)[this.serverResponse.path] : ROUTER.notFound;
+    if (ROUTER[this.serverResponse.path]) {
+      return ROUTER[this.serverResponse.path];
+    }
+  }
 
   private constructor() {
+    this.serverResponse = { path: '', method: ''}; // this is a simple initialization
     this.server = http.createServer(
       (request: http.IncomingMessage, response: http.ServerResponse) => {
         const parseUrl = url.parse(request.url || '', true);
         const decoder: NodeStringDecoder = new StringDecoder('utf-8');
-        this.payload = ''; // payload resets with every new request
-        this.path = (parseUrl.pathname || '').replace(/^\/+|\/+$/g, '');
-        this.method = (request.method || '').toLowerCase();
-        this.queryStringObject = parseUrl.query;
-        this.headers = request.headers;
+        this.serverResponse = {
+          path: (parseUrl.pathname || '').replace(/^\/+|\/+$/g, ''),
+          method: (request.method || '').toLowerCase(),
+          queryStringObject: parseUrl.query,
+          headers: request.headers,
+          payload: ''
+        };
         request
-          .on('data', (data: Buffer) => this.payload += decoder.write(data))
+          .on('data', (data: Buffer) => this.serverResponse.payload += decoder.write(data))
           .on('end', () => {
-            this.payload += decoder.end();
+            this.serverResponse.payload += decoder.end();
+            this.chosenHandler(this.serverResponse, (statis))
             response.end('Hello World!\n');
-            this.logRequestState();
           });
       }
     );
@@ -44,23 +50,6 @@ class WebServer {
     this.server.listen(PORT, () => {
       console.log(`The server is listening on port ${PORT}...`);
     });
-  }
-  logRequestState() {
-    if (this.path) {
-      console.log(`Request received on path: ${this.path}.`);
-    }
-    if (this.method) {
-      console.log(`Method: ${this.method}.`);
-    }
-    if (this.queryStringObject && Object.keys(this.queryStringObject).length) {
-      console.log('Query string parameters: ', this.queryStringObject);
-    }
-    if (this.headers && Object.keys(this.headers).length) {
-      console.log('Request received with these headers: ', this.headers);
-    }
-    if (this.payload) {
-      console.log(`'Request received with these payload: ': ${this.payload}.`)
-    }
   }
 }
 
