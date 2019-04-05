@@ -1,6 +1,5 @@
-import { IServerResponseModel } from './models/server-response.model';
-
-export type callbackType = (statusCode: number, payload?: any) => void;
+import { IServerResponseModel } from '../data-structures/models/server-response.model';
+import { callbackType } from '../data-structures/types/callback.type';
 
 export class Handler {
   static sample(data: IServerResponseModel, callback: callbackType) {

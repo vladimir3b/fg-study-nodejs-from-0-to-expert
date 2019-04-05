@@ -1,7 +1,6 @@
 import { ParsedUrlQuery } from 'querystring';
 import * as http from 'http';
 
-
 export interface IServerResponseModel {
   path: string;
   method: string;
