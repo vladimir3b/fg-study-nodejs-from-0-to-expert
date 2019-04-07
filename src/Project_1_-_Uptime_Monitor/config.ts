@@ -4,11 +4,13 @@ import { IEnvironmentModel } from './data-structures/models/environment.model';
 export class Config {
   private static _environments: IHashTable<IEnvironmentModel> = {
     staging: {
-      port: 3000,
+      httpPort: 3000,
+      httpsPort: 3100,
       envName: 'staging'
     },
     production: {
-      port: 5000,
+      httpPort: 5000,
+      httpsPort: 5100,
       envName: 'production'
     }
   }

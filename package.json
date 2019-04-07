@@ -4,7 +4,7 @@
   "description": "Study NodeJS with real world applications in JavaScript and Typescript",
   "main": "index.js",
   "scripts": {
-    "project_1": "set NODE_ENV=production & nodemon ./src/Project_1_-_Uptime_Monitor/index.ts"
+    "project_1": "set NODE_ENV=developing & nodemon ./src/Project_1_-_Uptime_Monitor/index.ts"
   },
   "repository": {
     "type": "git",

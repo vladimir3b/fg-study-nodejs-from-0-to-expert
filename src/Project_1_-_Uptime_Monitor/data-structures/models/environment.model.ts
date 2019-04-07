@@ -1,4 +1,5 @@
 export interface IEnvironmentModel {
-  port: number;
+  httpPort: number;
+  httpsPort: number;
   envName: string;
 }

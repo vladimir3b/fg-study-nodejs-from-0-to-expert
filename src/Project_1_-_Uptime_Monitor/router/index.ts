@@ -4,6 +4,6 @@ import { IHashTable } from '../data-structures/hash-table';
 import { handlerType } from '../data-structures/types/handler.type';
 
 export const ROUTER: IHashTable<handlerType> = {
-  sample: Handler.sample,
+  ping: Handler.ping,
   notFound: Handler.notFound
 }
