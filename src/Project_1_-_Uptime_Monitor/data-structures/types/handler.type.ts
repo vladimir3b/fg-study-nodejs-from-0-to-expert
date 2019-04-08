@@ -1,4 +1,4 @@
-import { callbackType } from './callback.type';
+import { callbackHandlerType } from './callback.types';
 import { IServerResponseModel } from '../models/server-response.model';
 
-export type handlerType = (date: IServerResponseModel, callback: callbackType) => void;
+export type handlerType = (date: IServerResponseModel, callback: callbackHandlerType) => void;

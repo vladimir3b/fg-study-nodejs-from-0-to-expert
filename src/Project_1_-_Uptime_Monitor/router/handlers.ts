@@ -1,11 +1,11 @@
 import { IServerResponseModel } from '../data-structures/models/server-response.model';
-import { callbackType } from '../data-structures/types/callback.type';
+import { callbackHandlerType } from '../data-structures/types/callback.types';
 
 export class Handler {
-  static ping(data: IServerResponseModel, callback: callbackType) {
+  static ping(data: IServerResponseModel, callback: callbackHandlerType) {
     callback(200);
   }
-  static notFound(data: IServerResponseModel, callback: callbackType) {
+  static notFound(data: IServerResponseModel, callback: callbackHandlerType) {
     callback(404);
   }
 }
