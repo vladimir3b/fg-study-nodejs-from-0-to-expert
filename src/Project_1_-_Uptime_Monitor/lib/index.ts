@@ -46,4 +46,49 @@ export class Lib {
       }
     );
   }
+  static update(directory: string, fileName: string, data: any, callback: callbackClassicType): void {
+    fs.open(
+      `${this.baseDir}${directory}/${fileName}.json`,
+      'r+',
+      (error: NodeJS.ErrnoException, fileDescriptor: number) => {
+        if (!error) {
+          fs.truncate(
+            `${this.baseDir}${directory}/${fileName}.json`,
+            // tslint:disable-next-line: no-shadowed-variable
+            (error: NodeJS.ErrnoException) => {
+              if (!error) {
+                // tslint:disable-next-line: no-shadowed-variable
+                fs.writeFile(fileDescriptor, JSON.stringify(data), (error: NodeJS.ErrnoException) => {
+                  if (!error) {
+                    // tslint:disable-next-line: no-shadowed-variable
+                    fs.close(fileDescriptor, (error: NodeJS.ErrnoException) => {
+                      if (error) {
+                        callback('Error closing existing file.');
+                      }
+                    })
+                  } else {
+                    callback('Error writing to existing file.');
+                  }
+                })
+              } else {
+                callback('Error truncating file.');
+              }
+            }
+          )
+        } else {
+          console.log('Could not open the file for updating, it may not exist.')
+        }
+      }
+    );
+  }
+  static delete(directory: string, fileName: string, callback: callbackClassicType): void {
+    fs.unlink(
+      `${this.baseDir}${directory}/${fileName}.json`,
+      (error: NodeJS.ErrnoException) => {
+        if (error) {
+          callback('Error deleting file.')
+        }
+      }
+    )
+  }
 }

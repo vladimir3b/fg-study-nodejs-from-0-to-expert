@@ -8,13 +8,34 @@ import { Lib } from './lib';
 //   {
 //     name: 'John Smith'
 //   },
-//   (error: NodeJS.ErrnoException) => error ? console.log(error) : null
+//   (error: string) => error ? console.log(error) : null
 // );
 // Lib.read(
 //   'test',
-//   'testFilef',
+//   'testFile',
 //   (error: string, data?: string) => error ? console.log(error) : console.log(data)
 // );
+// Lib.delete(
+//   'test',
+//   'testFile',
+//   (error: string) => console.log(error)
+// );
 
+Lib.update(
+  'test',
+  'testFile',
+  {
+    name: 'Jane Smith'
+  },
+  (error: string) => error ? console.log(error) : null
+);
+Lib.update(
+  'test',
+  'testFile',
+  {
+    name: 'Cain Lee'
+  },
+  (error: string) => error ? console.log(error) : null
+);
 const MyServer = WebServer.Instance;
 MyServer.startServers();
